@@ -46,6 +46,14 @@ namespace QueryStringGenerator.Services
 
                 if (declaredSymbol!.Type.IsValueType)
                 {
+                    if (declaredSymbol.NullableAnnotation != NullableAnnotation.Annotated)
+                    {
+                        // Currently only nullable value types are supported. If non-nullable types
+                        // need to be supported, then need to clarify whether to include for example
+                        // int=0 value to query string or not.
+                        continue;
+                    }
+
                     if (declaredSymbol.IsEnum())
                     {
                         sb.AppendLine(GetEnumType(declaredSymbol, property.Identifier.ValueText));
