@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "QueryStringGenerator": {
+      "commandName": "Project"
+    },
+    "Debug Roslyn SG": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\QueryStringGenerator.App\\QueryStringGenerator.App.csproj"
+    }
+  }
+}
