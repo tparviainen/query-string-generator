@@ -1,6 +1,6 @@
 # Query String Generator
 
-Generate a query string for a class with C# source generator. Currently only nullable types are supported.
+Generate a query string for a class with C# source generator.
 
 # Usage
 
