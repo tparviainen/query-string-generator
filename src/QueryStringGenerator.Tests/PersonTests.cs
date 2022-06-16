@@ -1,24 +1,30 @@
+using QueryStringGenerator.Tests.Models;
 using System.Net;
 
 namespace QueryStringGenerator.Tests;
 
-[QueryString]
-public partial class Person
+public class PersonTests
 {
-    public string? FirstName { get; set; }
-    public string LastName { get; set; } = default!;
-    public int? Age { get; set; }
-}
+    [Fact]
+    public void ValueTypeEncodedCorrectly()
+    {
+        // Arrange
+        var person = new Person
+        {
+            Age = 42
+        };
 
-public class Student : Person
-{
-    public string? Institute { get; set; }
-}
+        // Act
+        var queryString = person.ToQueryString();
 
-public class UnitTest1
-{
+        // Assert
+        Assert.Equal("&age=42", queryString);
+    }
+
     [Theory]
-    [InlineData("John", "Doe")]
+    [InlineData("Kylo", "Ren")]
+    [InlineData("Jean-Luc", "Picard")]
+    [InlineData("Raven", "Darkhölme")]
     public void ReferenceTypeValuesEncodedCorrectly(string firstName, string lastName)
     {
         // Arrange
