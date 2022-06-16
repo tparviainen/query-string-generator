@@ -24,7 +24,9 @@ public partial class Model
 }
 ```
 
-## Get the Query String
+## Get the Generated Query String
+
+By default the generated method name is `ToQueryString`, which can be called to get the query string of the object.
 
 ```csharp
 var model = new Model
