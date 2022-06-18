@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace QueryStringGenerator.Extensions
 {
-    internal static class SyntaxExtensions
+    internal static class SyntaxNodeExtensions
     {
         /// <summary>
         /// Returns the class modifiers. Partial keyword is excluded due the fact that extension
