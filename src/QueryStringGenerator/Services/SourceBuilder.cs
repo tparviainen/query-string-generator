@@ -26,7 +26,6 @@ namespace QueryStringGenerator.Services
                 var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(cds)!;
 
                 _params.Namespace = symbol.ContainingNamespace.ToString();
-                _params.Modifiers = cds.Modifiers.ToString();
                 _params.Modifiers = cds.GetModifiers();
                 _params.ClassName = symbol.Name;
                 _params.MethodName = symbol.GetMethodName();
@@ -80,11 +79,11 @@ namespace QueryStringGenerator.Services
             var sb = new StringBuilder();
 
             sb.AppendLine($@"
-            if ({text} != null)
+            if (_this.{text} != null)
             {{
                 string value;
 
-                switch ({text})
+                switch (_this.{text})
                 {{");
 
             var members = type.GetMembers();
@@ -109,18 +108,18 @@ namespace QueryStringGenerator.Services
         private string GetValueType(string text)
         {
             return $@"
-            if ({text} != null)
+            if (_this.{text} != null)
             {{
-                sb.Append($""&{text.ToLower()}={{{text}}}"");
+                sb.Append($""&{text.ToLower()}={{_this.{text}}}"");
             }}";
         }
 
         private string GetReferenceType(string text)
         {
             return $@"
-            if ({text} != null)
+            if (_this.{text} != null)
             {{
-                sb.Append($""&{text.ToLower()}={{WebUtility.UrlEncode({text})}}"");
+                sb.Append($""&{text.ToLower()}={{WebUtility.UrlEncode(_this.{text})}}"");
             }}";
         }
 
@@ -135,10 +134,15 @@ using System.Text;
 
 namespace {_params.Namespace}
 {{
-    {_params.Modifiers} class {_params.ClassName}
+    {_params.Modifiers} static class QueryStringExtensionFor{_params.ClassName}
     {{
-        public string {_params.MethodName}()
+        public static string {_params.MethodName}(this {_params.ClassName} _this)
         {{
+            if (_this == null)
+            {{
+                return string.Empty;
+            }}
+
             var sb = new StringBuilder();
 {_params.Properties}
             return sb.ToString();

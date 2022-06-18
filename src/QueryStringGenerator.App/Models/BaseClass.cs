@@ -1,7 +1,7 @@
 ﻿namespace QueryStringGenerator.App.Models;
 
 [QueryString]
-internal partial class BaseClass
+internal class BaseClass
 {
     public enum Inheritance
     {
