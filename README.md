@@ -12,13 +12,13 @@ PM> Install-Package ...
 
 ## Changes to Models
 
-Class must be declared `partial` and decorated with `QueryString` attribute.
+Class must be decorated with `QueryString` attribute.
 
 ```csharp
 using QueryStringGenerator;
 
 [QueryString]
-public partial class Model
+public class Model
 {
     // existing properties ...
 }
@@ -26,7 +26,7 @@ public partial class Model
 
 ## Get the Generated Query String
 
-By default the generated method name is `ToQueryString`, which can be called to get the query string of the object.
+By default the generated method name is `ToQueryString`, which when called returns the query string of the object.
 
 ```csharp
 var model = new Model
