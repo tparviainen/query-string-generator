@@ -27,6 +27,7 @@ namespace QueryStringGenerator.Services
 
                 _params.Namespace = symbol.ContainingNamespace.ToString();
                 _params.Modifiers = cds.Modifiers.ToString();
+                _params.Modifiers = cds.GetModifiers();
                 _params.ClassName = symbol.Name;
                 _params.MethodName = symbol.GetMethodName();
                 _params.Properties += AddProperties(syntaxContext, cds);
