@@ -8,10 +8,19 @@ namespace QueryStringGenerator.Extensions
     internal static class SyntaxNodeExtensions
     {
         /// <summary>
-        /// Returns the class modifiers. Partial keyword is excluded due the fact that extension
-        /// methods cannot be declared inside 'partial static class'.
+        /// Returns the class modifiers. Partial keyword is excluded due the fact that generated
+        /// extension methods cannot be declared inside 'partial' classes. If no access modifier
+        /// is specified returns 'internal'.
         /// </summary>
-        public static string GetModifiers(this ClassDeclarationSyntax cds) =>
-            string.Join(" ", cds.Modifiers.Where(m => !m.IsKind(SyntaxKind.PartialKeyword)));
+        public static string GetModifiers(this ClassDeclarationSyntax cds)
+        {
+            var modifiers = cds.Modifiers.Where(m => !m.IsKind(SyntaxKind.PartialKeyword));
+            if (modifiers.Any())
+            {
+                return string.Join(" ", modifiers);
+            }
+
+            return "internal";
+        }
     }
 }
