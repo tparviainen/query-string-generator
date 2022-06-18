@@ -127,7 +127,7 @@ namespace QueryStringGenerator.Services
 
         internal string GetSource()
         {
-            return $@"// Auto-generated code @ {DateTime.Now}
+            return $@"// Auto-generated code
 using System;
 using System.Net;
 using System.Text;
