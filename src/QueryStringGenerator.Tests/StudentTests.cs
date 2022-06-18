@@ -37,4 +37,20 @@ public class StudentTests
         // Assert
         Assert.Equal("&school=jediAcademy&firstname=Luke&lastname=Skywalker", queryString);
     }
+
+    [Fact]
+    public void UnknownEnumValueShouldThrowException()
+    {
+        // Arrange
+        var student = new Student
+        {
+            School = (School)42
+        };
+
+        // Act
+        var action = () => student.ToQueryStringFromStudent();
+
+        // Assert
+        Assert.Throws<NotImplementedException>(action);
+    }
 }
