@@ -7,12 +7,12 @@ Generate a query string for a class with C# source generator.
 Install package
 
 ```
-PM> Install-Package ...
+PM> Install-Package QueryStringGenerator
 ```
 
 ## Changes to Models
 
-Class must be decorated with `QueryString` attribute.
+Class must be decorated with `QueryString` attribute, which is declared in `QueryStringGenerator` namespace.
 
 ```csharp
 using QueryStringGenerator;
