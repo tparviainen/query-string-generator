@@ -1,6 +1,6 @@
 # Query String Generator
 
-Generate a query string for a class with C# source generator.
+C# source generator to create a method that returns the query string of the object.
 
 # Usage
 

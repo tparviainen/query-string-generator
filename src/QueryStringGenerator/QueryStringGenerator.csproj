@@ -17,6 +17,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <RepositoryUrl>https://github.com/tparviainen/query-string-generator.git</RepositoryUrl>
+    <Description>C# source generator to create a method that returns the query string of the object.</Description>
   </PropertyGroup>
 
   <ItemGroup>
