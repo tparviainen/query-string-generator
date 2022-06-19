@@ -10,10 +10,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageId>QueryStringGenerator</PackageId>
-    <Version>1.0.0-rc1</Version>
+    <Version>$(Version)</Version>
     <Authors>Tomi Parviainen</Authors>
     <PackageReadmeFile>docs\README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <RepositoryUrl>https://github.com/tparviainen/query-string-generator.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
