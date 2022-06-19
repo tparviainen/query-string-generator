@@ -6,6 +6,21 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <PackageId>QueryStringGenerator</PackageId>
+    <Version>1.0.0-rc1</Version>
+    <Authors>Tomi Parviainen</Authors>
+    <PackageReadmeFile>docs\README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\docs\"/>
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="QueryStringAttribute.cs" />
   </ItemGroup>
