@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <DevelopmentDependency>true</DevelopmentDependency>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageId>QueryStringGenerator</PackageId>
