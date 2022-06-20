@@ -20,3 +20,14 @@ var childClass = new ChildClass
 Console.WriteLine("Generated query strings:");
 Console.WriteLine("- base: " + baseClass.ToQueryString());
 Console.WriteLine("- child: " + childClass.ToQueryString() + childClass.ChildQueryString());
+
+/*
+ * README.md example model and the output
+ */
+var model = new Model
+{
+    Limit = 10,
+    Sort = "Price"
+};
+
+Console.WriteLine($"Query string: {model.ToQueryString()}");
