@@ -4,7 +4,7 @@ C# source generator to create a method that returns the query string of the obje
 
 # Usage
 
-Install [NuGet](https://www.nuget.org/packages/QueryStringGenerator) package
+Install the [NuGet](https://www.nuget.org/packages/QueryStringGenerator) package
 
 ```
 PM> Install-Package QueryStringGenerator
