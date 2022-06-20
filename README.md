@@ -4,7 +4,7 @@ C# source generator to create a method that returns the query string of the obje
 
 # Usage
 
-Install package
+Install the [NuGet](https://www.nuget.org/packages/QueryStringGenerator) package
 
 ```
 PM> Install-Package QueryStringGenerator
@@ -20,7 +20,9 @@ using QueryStringGenerator;
 [QueryString]
 public class Model
 {
-    // existing properties ...
+    public int? Limit { get; set; }
+    public int? Offset { get; set; }
+    public string? Sort { get; set; }
 }
 ```
 
@@ -31,10 +33,17 @@ By default the generated method name is `ToQueryString`, which when called retur
 ```csharp
 var model = new Model
 {
-    // set values to properties ...
+    Limit = 10,
+    Sort = "Price"
 };
 
 Console.WriteLine($"Query string: {model.ToQueryString()}");
+
+/*
+This code example produces the following results:
+
+Query string: &limit=10&sort=Price
+*/
 ```
 
 # Supported Data Types
