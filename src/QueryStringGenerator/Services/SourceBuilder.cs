@@ -80,8 +80,6 @@ namespace QueryStringGenerator.Services
             sb.AppendLine($@"
             if (_this.{text} != null)
             {{
-                string value;
-
                 switch (_this.{text})
                 {{");
 
@@ -89,7 +87,7 @@ namespace QueryStringGenerator.Services
             foreach (var member in type.GetMembers().Where(m => m.Kind == SymbolKind.Field))
             {
                 sb.AppendLine($@"                    case {member}:
-                        value = ""&{text.ToLower()}={char.ToLowerInvariant(member.Name[0])}{member.Name.Substring(1)}"";
+                        sb.Append(""&{text.ToLower()}={char.ToLowerInvariant(member.Name[0])}{member.Name.Substring(1)}"");
                         break;
 ");
             }
@@ -97,8 +95,6 @@ namespace QueryStringGenerator.Services
             sb.Append($@"                    default:
                         throw new NotImplementedException();
                 }}
-
-                sb.Append(value);
             }}");
 
             return sb.ToString();
