@@ -30,4 +30,4 @@ var model = new Model
     Sort = "Price"
 };
 
-Console.WriteLine($"Query string: {model.ToQueryString()}");
+Console.WriteLine($"Query string: {model.GetQueryString()}");

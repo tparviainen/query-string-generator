@@ -5,11 +5,7 @@ namespace QueryStringGenerator
     {
         public string MethodName { get; set; }
 
-        public QueryStringAttribute()
-        {
-        }
-
-        public QueryStringAttribute(string methodName)
+        public QueryStringAttribute(string methodName = "ToQueryString")
         {
             MethodName = methodName;
         }
