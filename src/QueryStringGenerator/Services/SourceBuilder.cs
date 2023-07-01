@@ -1,7 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using QueryStringGenerator.Extensions;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -10,42 +8,28 @@ namespace QueryStringGenerator.Services
     internal class SourceBuilder
     {
         private readonly SourceParams _params = new();
-        private KeyValuePair<string, List<GeneratorSyntaxContext>> _kvp;
 
-        public SourceBuilder(KeyValuePair<string, List<GeneratorSyntaxContext>> kvp)
+        public SourceBuilder(ITypeSymbol typeSymbol)
         {
-            _kvp = kvp;
+            _params.Namespace = typeSymbol.ContainingNamespace.ToString();
+            _params.Modifiers = GetModifiers(typeSymbol.DeclaredAccessibility);
+            _params.ClassName = typeSymbol.Name;
+            _params.MethodName = typeSymbol.GetMethodName();
+            _params.Properties = GetProperties(typeSymbol);
+            _params.FileName = $"{typeSymbol.Name}.g.cs";
         }
 
-        internal void Build()
+        private string? GetProperties(ITypeSymbol typeSymbol)
         {
-            foreach (var syntaxContext in _kvp.Value)
-            {
-                var cds = (syntaxContext.Node as ClassDeclarationSyntax)!;
-                var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(cds)!;
-
-                _params.Namespace = symbol.ContainingNamespace.ToString();
-                _params.Modifiers = cds.GetModifiers();
-                _params.ClassName = symbol.Name;
-                _params.MethodName = symbol.GetMethodName();
-                _params.Properties += AddProperties(syntaxContext, cds);
-                _params.FileName = $"{cds.Identifier.ValueText}.g.cs";
-            }
-        }
-
-        private string AddProperties(GeneratorSyntaxContext context, ClassDeclarationSyntax cds)
-        {
-            var properties = cds.DescendantNodes().OfType<PropertyDeclarationSyntax>();
+            var properties = typeSymbol.GetMembers().OfType<IPropertySymbol>();
 
             var sb = new StringBuilder();
 
             foreach (var property in properties)
             {
-                var declaredSymbol = context.SemanticModel.GetDeclaredSymbol(property) as IPropertySymbol;
-
-                if (declaredSymbol!.Type.IsValueType)
+                if (property.Type.IsValueType)
                 {
-                    if (declaredSymbol.NullableAnnotation != NullableAnnotation.Annotated)
+                    if (property.NullableAnnotation != NullableAnnotation.Annotated)
                     {
                         // Currently only nullable value types are supported. If non-nullable types
                         // need to be supported, then need to clarify whether to include for example
@@ -53,26 +37,43 @@ namespace QueryStringGenerator.Services
                         continue;
                     }
 
-                    if (declaredSymbol.IsEnum())
+                    if (property.IsEnum())
                     {
-                        sb.AppendLine(GetEnumType(declaredSymbol, property.Identifier.ValueText));
+                        sb.AppendLine(GetEnumType(property));
                     }
                     else
                     {
-                        sb.AppendLine(GetValueType(property.Identifier.ValueText));
+                        sb.AppendLine(GetValueType(property.Name));
                     }
                 }
                 else
                 {
-                    sb.AppendLine(GetReferenceType(property.Identifier.ValueText));
+                    sb.AppendLine(GetReferenceType(property.Name));
                 }
             }
 
             return sb.ToString();
         }
 
-        private string GetEnumType(IPropertySymbol declaredSymbol, string text)
+        /// <summary>
+        /// Returns the class modifiers. Partial keyword is excluded due the fact that generated
+        /// extension methods cannot be declared inside 'partial' classes. If no access modifier
+        /// is specified returns 'internal'.
+        /// </summary>
+        private string GetModifiers(Accessibility declaredAccessibility)
         {
+            return declaredAccessibility switch
+            {
+                Accessibility.Private => "private",
+                Accessibility.Internal => "internal",
+                Accessibility.Public => "public",
+                _ => "internal"
+            };
+        }
+
+        private string GetEnumType(IPropertySymbol declaredSymbol)
+        {
+            var text = declaredSymbol.Name;
             var type = ((INamedTypeSymbol)declaredSymbol.Type).TypeArguments.First();
 
             var sb = new StringBuilder();
@@ -93,7 +94,7 @@ namespace QueryStringGenerator.Services
             }
 
             sb.Append($@"                    default:
-                        throw new NotImplementedException();
+                        throw new System.NotImplementedException();
                 }}
             }}");
 
@@ -114,7 +115,7 @@ namespace QueryStringGenerator.Services
             return $@"
             if (_this.{text} != null)
             {{
-                sb.Append($""&{text.ToLower()}={{WebUtility.UrlEncode(_this.{text})}}"");
+                sb.Append($""&{text.ToLower()}={{System.Net.WebUtility.UrlEncode(_this.{text})}}"");
             }}";
         }
 
@@ -123,9 +124,6 @@ namespace QueryStringGenerator.Services
         internal string GetSource()
         {
             return $@"// <auto-generated />
-using System;
-using System.Net;
-using System.Text;
 
 namespace {_params.Namespace}
 {{
@@ -139,7 +137,7 @@ namespace {_params.Namespace}
                 return string.Empty;
             }}
 
-            var sb = new StringBuilder();
+            var sb = new System.Text.StringBuilder();
 {_params.Properties}
             return sb.ToString();
         }}

@@ -13,7 +13,7 @@ namespace QueryStringGenerator.Extensions
         /// Gets the query string method name. The name is either named argument or constructor argument value.
         /// <exception cref="ArgumentNullException">Thrown when MethodName is not valid.</exception>
         /// </summary>
-        public static string GetMethodName(this ISymbol symbol)
+        public static string GetMethodName(this ITypeSymbol symbol)
         {
             var attribute = symbol.GetAttributes().Single(a => a.AttributeClass?.Name == _queryStringAttribute);
 

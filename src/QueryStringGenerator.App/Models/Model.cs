@@ -1,6 +1,6 @@
 ﻿namespace QueryStringGenerator.App.Models;
 
-[QueryString(MethodName = "GetQueryString")]
+[QueryString]
 public class Model
 {
     public int? Limit { get; set; }
