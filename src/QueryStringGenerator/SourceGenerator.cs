@@ -11,7 +11,7 @@ using System.Threading;
 namespace QueryStringGenerator
 {
     [Generator]
-    public class SourceGenerator : IIncrementalGenerator
+    internal class SourceGenerator : IIncrementalGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
