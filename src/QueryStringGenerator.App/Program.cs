@@ -4,14 +4,14 @@ using static QueryStringGenerator.App.Models.BaseClass;
 var baseClass = new BaseClass
 {
     Hierarchy = Inheritance.BaseClass,
-    Description = "C# Source Generator (from base)",
+    Description = "C# Incremental Generator (from base)",
     Id = 42
 };
 
 var childClass = new ChildClass
 {
     Hierarchy = Inheritance.ChildClass,
-    Description = "C# Source Generator (from child)",
+    Description = "C# Incremental Generator (from child)",
     Year = 24,
     Id = 42,
     Name = "CSSG"
@@ -30,4 +30,4 @@ var model = new Model
     Sort = "Price"
 };
 
-Console.WriteLine($"Query string: {model.GetQueryString()}");
+Console.WriteLine($"Query string: {model.ToQueryString()}");

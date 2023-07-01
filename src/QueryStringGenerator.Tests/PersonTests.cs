@@ -1,43 +1,96 @@
-using QueryStringGenerator.Tests.Models;
-using System.Net;
-
 namespace QueryStringGenerator.Tests;
 
+[UsesVerify]
 public class PersonTests
 {
     [Fact]
-    public void ValueTypeEncodedCorrectly()
+    public Task ValueTypeEncodedCorrectly()
     {
-        // Arrange
-        var person = new Person
-        {
-            Age = 42
-        };
+        // The source code to test
+        var source = """
+namespace QueryStringGenerator.Tests.Models;
 
-        // Act
-        var queryString = person.ToQueryString();
+[QueryString]
+public class Person
+{
+    public int? Age { get; set; }
+}
+""";
 
-        // Assert
-        Assert.Equal("&age=42", queryString);
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
     }
 
-    [Theory]
-    [InlineData("Kylo", "Ren")]
-    [InlineData("Jean-Luc", "Picard")]
-    [InlineData("Raven", "Darkhölme")]
-    public void ReferenceTypeValuesEncodedCorrectly(string firstName, string lastName)
+    [Fact]
+    public Task ValueTypeWithConstructorArgumentsEncodedCorrectly()
     {
-        // Arrange
-        var person = new Person
-        {
-            FirstName = firstName,
-            LastName = lastName
-        };
+        // The source code to test
+        var source = """
+namespace QueryStringGenerator.Tests.Models;
 
-        // Act
-        var queryString = person.ToQueryString();
+[QueryString("ToQueryStringFromPerson")]
+public class Person
+{
+    public int? Age { get; set; }
+}
+""";
 
-        // Assert
-        Assert.Equal($"&firstname={WebUtility.UrlEncode(firstName)}&lastname={WebUtility.UrlEncode(lastName)}", queryString);
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
+    }
+
+    [Fact]
+    public Task ValueTypesEncodedCorrectly()
+    {
+        // The source code to test
+        var source = """
+namespace QueryStringGenerator.Tests.Models;
+
+[QueryString]
+public class Person
+{
+    public int? Age { get; set; }
+    public int? Weight { get; set; }
+}
+""";
+
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
+    }
+
+    [Fact]
+    public Task ReferenceTypeEncodedCorrectly()
+    {
+        // The source code to test
+        var source = """
+namespace QueryStringGenerator.Tests.Models;
+
+[QueryString]
+public class Person
+{
+    public string? FirstName { get; set; }
+}
+""";
+
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
+    }
+
+    [Fact]
+    public Task ReferenceTypeWithNamedArgumentsEncodedCorrectly()
+    {
+        // The source code to test
+        var source = """
+namespace QueryStringGenerator.Tests.Models;
+
+[QueryString(MethodName = "ToQueryStringFromPerson")]
+public class Person
+{
+    public string? FirstName { get; set; }
+}
+""";
+
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
     }
 }

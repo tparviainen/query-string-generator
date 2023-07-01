@@ -1,56 +1,62 @@
-using QueryStringGenerator.Tests.Models;
-
 namespace QueryStringGenerator.Tests;
 
+[UsesVerify]
 public class StudentTests
 {
     [Fact]
-    public void ValueTypeEnumEncodedCorrectly()
+    public Task ValueTypeEnumEncodedCorrectly()
     {
-        // Arrange
-        var student = new Student
-        {
-            School = School.JediAcademy
-        };
+        // The source code to test
+        var source = """
+namespace QueryStringGenerator.Tests.Models;
 
-        // Act
-        var queryString = student.ToQueryStringFromStudent();
+public enum School
+{
+    JediAcademy,
+    StarfleetAcademy,
+    XaviersSchoolForGiftedYoungsters
+};
 
-        // Assert
-        Assert.Equal("&school=jediAcademy", queryString);
+[QueryString]
+public class Student
+{
+    public School? School { get; set; }
+}
+""";
+
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
     }
 
     [Fact]
-    public void BaseClassPropertiesHandledCorrectly()
+    public Task BaseClassPropertiesHandledCorrectly()
     {
-        // Arrange
-        var student = new Student
-        {
-            FirstName = "Luke",
-            LastName = "Skywalker",
-            School = School.JediAcademy
-        };
+        // The source code to test
+        var source = """
+namespace QueryStringGenerator.Tests.Models;
 
-        // Act
-        var queryString = student.ToQueryStringFromStudent() + student.ToQueryString();
+public enum School
+{
+    JediAcademy,
+    StarfleetAcademy,
+    XaviersSchoolForGiftedYoungsters
+};
 
-        // Assert
-        Assert.Equal("&school=jediAcademy&firstname=Luke&lastname=Skywalker", queryString);
-    }
+public class Person
+{
+    public int? Age { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+}
 
-    [Fact]
-    public void UnknownEnumValueShouldThrowException()
-    {
-        // Arrange
-        var student = new Student
-        {
-            School = (School)42
-        };
+[QueryString(MethodName = "ToQueryStringFromStudent")]
+public class Student : Person
+{
+    public School? School { get; set; }
+}
+""";
 
-        // Act
-        var action = () => student.ToQueryStringFromStudent();
-
-        // Assert
-        Assert.Throws<NotImplementedException>(action);
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
     }
 }
