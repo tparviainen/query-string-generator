@@ -3,7 +3,7 @@
 
 namespace QueryStringGenerator.Tests.Models
 {
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("QueryStringGenerator", "1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("QueryStringGenerator", "1.0.0")]
     public static class QueryStringExtensionForStudent
     {
         public static string ToQueryString(this Student _this)

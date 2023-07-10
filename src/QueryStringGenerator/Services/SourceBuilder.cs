@@ -127,7 +127,7 @@ namespace QueryStringGenerator.Services
 
 namespace {_params.Namespace}
 {{
-    [System.CodeDom.Compiler.GeneratedCodeAttribute(""QueryStringGenerator"", ""1.0.0"")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(""QueryStringGenerator"", ""1.0.0"")]
     {_params.Modifiers} static class QueryStringExtensionFor{_params.ClassName}
     {{
         public static string {_params.MethodName}(this {_params.ClassName} _this)
