@@ -3,8 +3,8 @@
 
 namespace QueryStringGenerator
 {
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("QueryStringGenerator", "1.0.0")]
-    internal class QueryStringAttribute : System.Attribute
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("QueryStringGenerator", "1.0.0")]
+    internal class QueryStringAttribute : global::System.Attribute
     {
         public string MethodName { get; set; }
 
