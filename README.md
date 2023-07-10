@@ -55,7 +55,7 @@ Below is the auto-generated extension method for the class defined in step 2. ab
 
 namespace QueryStringGenerator.App.Models
 {
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("QueryStringGenerator", "1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("QueryStringGenerator", "1.0.0")]
     public static class QueryStringExtensionForModel
     {
         public static string ToQueryString(this Model _this)
@@ -65,7 +65,7 @@ namespace QueryStringGenerator.App.Models
                 return string.Empty;
             }
 
-            var sb = new System.Text.StringBuilder();
+            var sb = new global::System.Text.StringBuilder();
 
             if (_this.Limit != null)
             {
