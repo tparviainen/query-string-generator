@@ -13,7 +13,7 @@ namespace QueryStringGenerator.Tests.Models
                 return string.Empty;
             }
 
-            var sb = new System.Text.StringBuilder();
+            var sb = new global::System.Text.StringBuilder();
 
             if (_this.FirstName != null)
             {

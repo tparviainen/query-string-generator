@@ -13,7 +13,7 @@ namespace QueryStringGenerator.Tests.Models
                 return string.Empty;
             }
 
-            var sb = new System.Text.StringBuilder();
+            var sb = new global::System.Text.StringBuilder();
 
             if (_this.School != null)
             {
@@ -32,7 +32,7 @@ namespace QueryStringGenerator.Tests.Models
                         break;
 
                     default:
-                        throw new System.NotImplementedException();
+                        throw new global::System.NotImplementedException();
                 }
             }
 

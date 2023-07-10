@@ -94,7 +94,7 @@ namespace QueryStringGenerator.Services
             }
 
             sb.Append($@"                    default:
-                        throw new System.NotImplementedException();
+                        throw new global::System.NotImplementedException();
                 }}
             }}");
 
@@ -137,7 +137,7 @@ namespace {_params.Namespace}
                 return string.Empty;
             }}
 
-            var sb = new System.Text.StringBuilder();
+            var sb = new global::System.Text.StringBuilder();
 {_params.Properties}
             return sb.ToString();
         }}
