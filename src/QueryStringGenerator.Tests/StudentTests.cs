@@ -1,6 +1,5 @@
 namespace QueryStringGenerator.Tests;
 
-[UsesVerify]
 public class StudentTests
 {
     [Fact]
