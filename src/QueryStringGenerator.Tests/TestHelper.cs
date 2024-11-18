@@ -20,15 +20,15 @@ public static class TestHelper
 
     public static GeneratorDriver GeneratorDriver(SyntaxTree syntaxTree)
     {
-        IEnumerable<PortableExecutableReference> references = new[]
-        {
+        IEnumerable<PortableExecutableReference> references =
+        [
             MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
-        };
+        ];
 
         // Create a Roslyn compilation for the syntax tree
         CSharpCompilation compilation = CSharpCompilation.Create(
             assemblyName: "Tests",
-            syntaxTrees: new[] { syntaxTree },
+            syntaxTrees: [syntaxTree],
             references: references,
             options: new CSharpCompilationOptions(
                 outputKind: OutputKind.DynamicallyLinkedLibrary,
