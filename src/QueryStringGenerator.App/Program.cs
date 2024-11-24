@@ -1,4 +1,5 @@
-﻿using QueryStringGenerator.App.Models;
+﻿using System.Diagnostics;
+using QueryStringGenerator.App.Models;
 using static QueryStringGenerator.App.Models.BaseClass;
 
 var baseClass = new BaseClass
@@ -31,3 +32,9 @@ var model = new Model
 };
 
 Console.WriteLine($"Query string: {model.ToQueryString()}");
+
+// Assert the output
+Debug.Assert(baseClass.ToQueryString() == "&id=42&description=C%23+Incremental+Generator+(from+base)&hierarchy=baseClass");
+Debug.Assert(childClass.ToQueryString() == "&id=42&description=C%23+Incremental+Generator+(from+child)&hierarchy=childClass");
+Debug.Assert(childClass.ChildQueryString() == "&year=24&name=CSSG");
+Debug.Assert(model.ToQueryString() == "&limit=10&sort=Price");
