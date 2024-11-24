@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using QueryStringGenerator.Extensions;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,8 @@ namespace QueryStringGenerator.Services
 
         private string? GetProperties(ITypeSymbol typeSymbol)
         {
-            var properties = typeSymbol.GetMembers().OfType<IPropertySymbol>();
+            // Generated extension method ToQueryString() can only access public properties
+            var properties = typeSymbol.GetMembers().OfType<IPropertySymbol>().Where(ps => ps.DeclaredAccessibility == Accessibility.Public);
 
             var sb = new StringBuilder();
 
