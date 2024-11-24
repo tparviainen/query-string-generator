@@ -54,4 +54,25 @@ public class Person
         // Pass the source code to our helper and snapshot test the output
         return TestHelper.Verify(source);
     }
+
+    [Fact]
+    public Task QueryStringAttributeWithOtherAttributesIsFoundFromClass()
+    {
+        // The source code to test
+        var source = """
+using System;
+
+namespace QueryStringGenerator.Tests.Models;
+
+[QueryString]
+[Serializable]
+public class Person
+{
+    public int? Age { get; set; }
+}
+""";
+
+        // Pass the source code to our helper and snapshot test the output
+        return TestHelper.Verify(source);
+    }
 }
