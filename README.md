@@ -90,7 +90,10 @@ namespace QueryStringGenerator.App.Models
 
 # Supported Data Types
 
-- Nullable value types, including enums
-- Reference types
+- Class or record types
+- Properties that are
+    - Public
+    - Nullable value types, including enums
+    - Reference types
 
 **NOTE:** The query string _value_ for enum is the name of the enum starting with a lowercase character.
