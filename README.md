@@ -1,4 +1,7 @@
 # Query String Generator
+![Build status](https://github.com/tparviainen/query-string-generator/workflows/.NET/badge.svg)
+[![Version](https://img.shields.io/nuget/v/QueryStringGenerator.svg)](https://www.nuget.org/packages/QueryStringGenerator)
+[![License](https://img.shields.io/github/license/tparviainen/query-string-generator.svg)](https://github.com/tparviainen/query-string-generator/blob/main/LICENSE)
 
 C# incremental generator to create a method that returns the query string of the object.
 
